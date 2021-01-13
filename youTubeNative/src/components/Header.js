@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import Constant from 'expo-constants'
 
 const mycolor= '#212121'
 
@@ -30,11 +29,10 @@ const styles= StyleSheet.create({
     flexDirection: 'row',
     height: 40,
     justifyContent: 'space-between',
-    marginTop: Constant.statusBarHeight,
-    shadowColor: 'black',
+    shadowColor: 'gray',
     shadowOffset: {
-      height: 10,
-      width: 10,
+      height: 1,
+      width: 1,
     },
     shadowOpacity: .8,
   },
