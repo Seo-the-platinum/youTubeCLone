@@ -3,10 +3,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import Constant from 'expo-constants'
+import { useNavigation } from '@react-navigation/native';
 
+//find out why mycolor has to be outside of the header comp,
+// but other consts work inside
 const mycolor= '#212121'
 
 export default function Header() {
+  const navigation= useNavigation()
+
   return (
     <View style={ styles.container}>
       <View style={styles.ytLogoView}>
@@ -15,7 +21,11 @@ export default function Header() {
       </View>
       <View style={styles.iconsView}>
         <Ionicons name="md-videocam" size={32} color={mycolor}/>
-        <Ionicons name="md-search" size={32} color={mycolor}/>
+        <Ionicons
+          color={mycolor}
+          name="md-search"
+          onPress={()=> navigation.navigate('search')}
+          size={32} />
         <MaterialIcons name="account-circle" size={32} color={mycolor} />
       </View>
     </View>
@@ -29,6 +39,7 @@ const styles= StyleSheet.create({
     flexDirection: 'row',
     height: 40,
     justifyContent: 'space-between',
+    marginTop: Constant.statusBarHeight,
     shadowColor: 'gray',
     shadowOffset: {
       height: 1,

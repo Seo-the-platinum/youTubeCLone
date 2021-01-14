@@ -9,10 +9,12 @@ import {
   View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import MiniCard from '../components/MiniCard'
+import Constant from 'expo-constants'
+
 
 //'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=songs&type=video&key=AIzaSyAdo1P5jy7mqjC1cSBKmXULUx4S40u62tE'
 
-const SearchScreen= ()=> {
+const SearchScreen= ({navigation})=> {
   const [value, setValue]= useState('')
   const [miniCardData, setMiniCard]= useState([])
   const [loading, setLoading] = useState(false)
@@ -27,10 +29,14 @@ const SearchScreen= ()=> {
       setMiniCard(data.items)
     })
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.buttonsView}>
-        <Ionicons name='md-arrow-back' size={32} />
+        <Ionicons
+          name='md-arrow-back'
+          onPress={()=> navigation.goBack()}
+          size={32} />
         <TextInput
           onChangeText={(text)=> setValue(text)}
           style={styles.inputStyles}
@@ -82,6 +88,7 @@ const styles= StyleSheet.create({
 
   container: {
     flex: 1,
+    marginTop: Constant.statusBarHeight,
   },
 
   inputStyles: {

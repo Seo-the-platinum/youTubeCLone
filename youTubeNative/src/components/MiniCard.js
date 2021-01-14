@@ -5,7 +5,7 @@ const MiniCard= (props)=> {
   return (
     <View style={styles.container}>
       <Image
-        source={{uri: `https://i.ytimg.com/vi/${props.videoId}/maxresdefault.jpg`}}
+        source={{uri: `https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
         style={styles.backgroundImg}
       />
       <View style={styles.textView}>
