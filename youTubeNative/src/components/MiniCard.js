@@ -1,11 +1,11 @@
 import React from 'react'
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 
-const MiniCard= ()=> {
+const MiniCard= (props)=> {
   return (
     <View style={styles.container}>
       <Image
-        source={{uri: "https://images.unsplash.com/photo-1478250242432-9381e12b763b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=684&q=80"}}
+        source={{uri: `https://i.ytimg.com/vi/${props.videoId}/maxresdefault.jpg`}}
         style={styles.backgroundImg}
       />
       <View style={styles.textView}>
@@ -13,12 +13,12 @@ const MiniCard= ()=> {
           ellipsizeMode= 'tail'
           numberOfLines={3}
           style={styles.titleText}>
-          Title is here
+          {props.title}
         </Text>
         <Text
           style={styles.subText}
         >
-          sub text here
+          {props.channel}
         </Text>
       </View>
     </View>

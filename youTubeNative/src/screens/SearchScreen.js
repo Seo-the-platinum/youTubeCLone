@@ -1,11 +1,32 @@
 import React, { useState } from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import MiniCard from '../components/MiniCard'
 
+//'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=songs&type=video&key=AIzaSyAdo1P5jy7mqjC1cSBKmXULUx4S40u62tE'
 
 const SearchScreen= ()=> {
   const [value, setValue]= useState('')
+  const [miniCardData, setMiniCard]= useState([])
+  const [loading, setLoading] = useState(false)
+
+  const fetchData= ()=> {
+    setLoading(true)
+    fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video&key=AIzaSyAdo1P5jy7mqjC1cSBKmXULUx4S40u62tE`)
+    .then(res=> res.json())
+    .then(data=> {
+      console.log(data)
+      setLoading(false)
+      setMiniCard(data.items)
+    })
+  }
   return (
     <View style={styles.container}>
       <View style={styles.buttonsView}>
@@ -15,25 +36,35 @@ const SearchScreen= ()=> {
           style={styles.inputStyles}
           value={value}
         />
-        <Ionicons name='md-send' size={32}/>
+        <Ionicons
+          onPress={fetchData}
+          name='md-send'
+          size={32}/>
       </View>
-      <ScrollView>
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-        <MiniCard />
-      </ScrollView>
+      { loading ? (
+        <ActivityIndicator
+          color='red'
+          size='large'
+          style={styles.activityIndicator}/>) : (null) }
+      <FlatList
+        data={miniCardData}
+        keyExtractor={item=> item.id.videoId}
+        renderItem={({item})=> {
+          return <MiniCard
+            channel={item.snippet.channelTitle}
+            title={item.snippet.title}
+            videoId={item.id.videoId}
+          />
+        }}
+      />
     </View>
   )
 }
 
 const styles= StyleSheet.create({
+  activityIndicator: {
+    marginTop: 10,
+  },
 
   buttonsView: {
     backgroundColor: 'white',
