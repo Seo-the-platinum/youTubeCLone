@@ -11,7 +11,11 @@ import Explore from './src/screens/Explore'
 import VideoPlayer from './src/screens/VideoPlayer'
 import Subscribe from './src/screens/Subscribe'
 import { MaterialIcons } from '@expo/vector-icons';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import { reducer } from './src/reducers/reducer'
 
+const store= createStore(reducer)
 const Stack= createStackNavigator()
 const Tabs= createBottomTabNavigator()
 const RootHome= ()=> {
@@ -46,13 +50,15 @@ const RootHome= ()=> {
 }
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator headerMode= 'none'>
-        <Stack.Screen name='rootHome' component={RootHome}/>
-        <Stack.Screen name='search' component={SearchScreen}/>
-        <Stack.Screen name='videoPlayer' component={VideoPlayer}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator headerMode= 'none'>
+          <Stack.Screen name='rootHome' component={RootHome}/>
+          <Stack.Screen name='search' component={SearchScreen}/>
+          <Stack.Screen name='videoPlayer' component={VideoPlayer}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

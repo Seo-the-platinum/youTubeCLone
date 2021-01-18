@@ -10,13 +10,17 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 import MiniCard from '../components/MiniCard'
 import Constant from 'expo-constants'
-
+import { useSelector, useDispatch } from 'react-redux'
 
 //'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=songs&type=video&key=AIzaSyAdo1P5jy7mqjC1cSBKmXULUx4S40u62tE'
 
 const SearchScreen= ({navigation})=> {
   const [value, setValue]= useState('')
-  const [miniCardData, setMiniCard]= useState([])
+  //const [miniCardData, setMiniCard]= useState([])
+  const dispatch= useDispatch()
+  const miniCardData= useSelector(state=> {
+    return state
+  })
   const [loading, setLoading] = useState(false)
 
   const fetchData= ()=> {
@@ -24,9 +28,10 @@ const SearchScreen= ({navigation})=> {
     fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video&key=AIzaSyAdo1P5jy7mqjC1cSBKmXULUx4S40u62tE`)
     .then(res=> res.json())
     .then(data=> {
-      console.log(data)
+      console.log(data.items)
       setLoading(false)
-      setMiniCard(data.items)
+      dispatch({type: 'add', payload: data.items})
+      //setMiniCard(data.items)
     })
   }
 

@@ -2,11 +2,11 @@ import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 
-const Card= ()=> {
+const Card= (props)=> {
   return (
     <View stlye={styles.cardContainer}>
       <Image
-        source={{uri: "https://images.unsplash.com/photo-1478250242432-9381e12b763b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=684&q=80"}}
+        source={{uri: `https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
         style={styles.backgroundImg}
       />
       <View style={styles.cardTitleView}>
@@ -18,8 +18,8 @@ const Card= ()=> {
             style={
               styles.cardTitle
             }
-          > this is an amazing course and this a title and there should be 3 dots and you will learn alot</Text>
-          <Text> this is an amazing course</Text>
+          > {props.title}</Text>
+          <Text> {props.channel}</Text>
         </View>
       </View>
     </View>
