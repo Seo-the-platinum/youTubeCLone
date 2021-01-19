@@ -1,28 +1,40 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View } from 'react-native';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { useNavigation, useTheme } from '@react-navigation/native'
 
 const Card= (props)=> {
+  const navigation= useNavigation()
+  const { colors }= useTheme()
+  const textColor= colors.iconColor
   return (
-    <View stlye={styles.cardContainer}>
-      <Image
-        source={{uri: `https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
-        style={styles.backgroundImg}
-      />
-      <View style={styles.cardTitleView}>
-        <MaterialIcons name='account-circle' size={40} color='#212121'/>
-        <View>
-          <Text
-            ellipsizeMode='tail'
-            numberOfLines={2}
-            style={
-              styles.cardTitle
-            }
-          > {props.title}</Text>
-          <Text> {props.channel}</Text>
+    <TouchableOpacity
+      onPress={()=> navigation.navigate('videoPlayer', {videoId: props.videoId, title: props.title})}>
+      <View stlye={styles.cardContainer}>
+        <Image
+          source={{uri: `https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
+          style={styles.backgroundImg}
+        />
+        <View style={styles.cardTitleView}>
+          <MaterialIcons name='account-circle' size={40} color='#212121'/>
+          <View>
+            <Text
+              ellipsizeMode='tail'
+              numberOfLines={2}
+              style={{...styles.cardTitle, color: textColor}}
+            > {props.title}</Text>
+            <Text style={{color: textColor}}> {props.channel}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
+
   )
 }
 

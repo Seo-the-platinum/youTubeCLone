@@ -4,20 +4,26 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import Constant from 'expo-constants'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux'
 
 //find out why mycolor has to be outside of the header comp,
 // but other consts work inside
-const mycolor= '#212121'
 
 export default function Header() {
   const navigation= useNavigation()
+  const {colors}= useTheme()
+  const mycolor= colors.iconColor
+  const dispatch= useDispatch()
+  const currentTheme= useSelector(state=> {
+    return state.myDarkMode
+  })
 
   return (
-    <View style={ styles.container}>
+    <View style={{...styles.container, backgroundColor:colors.headerColor}}>
       <View style={styles.ytLogoView}>
         <AntDesign style={styles.ytLogo} name="youtube" size={32} color="red" />
-        <Text style={styles.ytLogoText}>YouTube</Text>
+        <Text style={{...styles.ytLogoText, color: mycolor}}>YouTube</Text>
       </View>
       <View style={styles.iconsView}>
         <Ionicons name="md-videocam" size={32} color={mycolor}/>
@@ -26,7 +32,11 @@ export default function Header() {
           name="md-search"
           onPress={()=> navigation.navigate('search')}
           size={32} />
-        <MaterialIcons name="account-circle" size={32} color={mycolor} />
+        <MaterialIcons
+          color={mycolor}
+          name="account-circle"
+          onPress={()=> dispatch({type: 'change_theme', payload:!currentTheme})} 
+          size={32} />
       </View>
     </View>
   )
@@ -34,7 +44,6 @@ export default function Header() {
 
 const styles= StyleSheet.create({
   container: {
-    backgroundColor: "white",
     elevation: 4,
     flexDirection: 'row',
     height: 40,
@@ -59,7 +68,6 @@ const styles= StyleSheet.create({
   },
 
   ytLogoText: {
-    color: mycolor,
     fontSize: 22,
     fontWeight: 'bold',
     marginLeft: 5,

@@ -11,15 +11,18 @@ import { Ionicons } from '@expo/vector-icons'
 import MiniCard from '../components/MiniCard'
 import Constant from 'expo-constants'
 import { useSelector, useDispatch } from 'react-redux'
+import { useTheme } from '@react-navigation/native'
 
 //'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=songs&type=video&key=AIzaSyAdo1P5jy7mqjC1cSBKmXULUx4S40u62tE'
 
 const SearchScreen= ({navigation})=> {
+  const {colors}= useTheme()
+  const mycolor= colors.iconColor
   const [value, setValue]= useState('')
   //const [miniCardData, setMiniCard]= useState([])
   const dispatch= useDispatch()
   const miniCardData= useSelector(state=> {
-    return state
+    return state.cardData
   })
   const [loading, setLoading] = useState(false)
 
@@ -28,7 +31,6 @@ const SearchScreen= ({navigation})=> {
     fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video&key=AIzaSyAdo1P5jy7mqjC1cSBKmXULUx4S40u62tE`)
     .then(res=> res.json())
     .then(data=> {
-      console.log(data.items)
       setLoading(false)
       dispatch({type: 'add', payload: data.items})
       //setMiniCard(data.items)
@@ -37,8 +39,9 @@ const SearchScreen= ({navigation})=> {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonsView}>
+      <View style={{...styles.buttonsView, backgroundColor:colors.headerColor }}>
         <Ionicons
+          color={mycolor}
           name='md-arrow-back'
           onPress={()=> navigation.goBack()}
           size={32} />
@@ -48,6 +51,7 @@ const SearchScreen= ({navigation})=> {
           value={value}
         />
         <Ionicons
+          color={mycolor}
           onPress={fetchData}
           name='md-send'
           size={32}/>
@@ -78,7 +82,6 @@ const styles= StyleSheet.create({
   },
 
   buttonsView: {
-    backgroundColor: 'white',
     elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-around',
