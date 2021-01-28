@@ -1,21 +1,28 @@
 import React from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native'
 import Header from '../components/Header'
 import Constant from 'expo-constants'
 import { WebView } from 'react-native-webview';
 
-
 const VideoPlayer= ({route})=> {
   const { title, videoId }= route.params
+
   return (
     <View style={styles.container}>
       <Header/>
       <View style={styles.playerView}>
+      { Platform.OS === 'web' ?
+        <iframe
+          height= '100%'
+          src={`https://www.youtube.com/embed/${videoId}`}
+          width= '100%'
+          />
+          :
         <WebView
           domStorageEnabled={true}
           javaScriptEnabled={true}
           source={{uri: `https://www.youtube.com/embed/${videoId}`}}
-        />
+        />}
       </View>
       <Text
         ellipsizeMode='tail'
@@ -34,6 +41,8 @@ const styles= StyleSheet.create({
   },
 
   playerView: {
+    borderColor:'red',
+    borderWidth: 2,
     height: 200,
     width: '100%',
   },
@@ -42,6 +51,7 @@ const styles= StyleSheet.create({
     fontSize: 20,
     margin: 9,
     width: Dimensions.get('screen').width -50,
-  }
+  },
+
 })
 export default VideoPlayer
