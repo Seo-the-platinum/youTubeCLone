@@ -37,9 +37,23 @@ const SearchScreen= ({navigation})=> {
     })
   }
 
+  const webButtonsView= {
+    backgroundColor:colors.headerColor,
+    elevation: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 5,
+    shadowColor: 'gray',
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    shadowOpacity: .8,
+  }
+
   return (
     <View style={styles.container}>
-      <View style={{...styles.buttonsView, backgroundColor:colors.headerColor }}>
+      <View style={webButtonsView}>
         <Ionicons
           color={mycolor}
           name='md-arrow-back'

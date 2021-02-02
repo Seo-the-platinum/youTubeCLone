@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Dimensions,
+  Platform,
   Image,
   StyleSheet,
   Text,
@@ -15,9 +16,11 @@ const Card= (props)=> {
   const textColor= colors.iconColor
   return (
     <TouchableOpacity
+      style={{flex: 1}}
       onPress={()=> navigation.navigate('videoPlayer', {videoId: props.videoId, title: props.title})}>
       <View stlye={styles.cardContainer}>
         <Image
+          resizeMode= 'contain'
           source={{uri: `https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
           style={styles.backgroundImg}
         />
@@ -40,8 +43,8 @@ const Card= (props)=> {
 
 const styles= StyleSheet.create({
   backgroundImg: {
-    height: 200,
-    width: '100%'
+    height: Platform.OS === 'web'? 500 : 200,
+    width: '100%',
   },
 
   cardContainer: {
@@ -53,6 +56,7 @@ const styles= StyleSheet.create({
       width: 10,
     },
     shadowOpacity: .8,
+    width: '100%',
   },
 
   cardTitle: {
@@ -61,6 +65,7 @@ const styles= StyleSheet.create({
   },
 
   cardTitleView: {
+    justifyContent: 'center',
     flexDirection: 'row',
     margin: 5,
   },

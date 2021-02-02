@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,8 +7,7 @@ import Constant from 'expo-constants'
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux'
 
-//find out why mycolor has to be outside of the header comp,
-// but other consts work inside
+
 
 export default function Header() {
   const navigation= useNavigation()
@@ -19,8 +18,23 @@ export default function Header() {
     return state.myDarkMode
   })
 
+  const containerStyle= {
+    backgroundColor: colors.headerColor,
+    elevation: 4,
+    flexDirection: 'row',
+    height: 40,
+    justifyContent: 'space-between',
+    marginTop: Constant.statusBarHeight,
+    shadowColor: 'gray',
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    shadowOpacity: .8,
+  }
+
   return (
-    <View style={{...styles.container, backgroundColor:colors.headerColor}}>
+    <View style={containerStyle}>
       <View style={styles.ytLogoView}>
         <AntDesign style={styles.ytLogo} name="youtube" size={32} color="red" />
         <Text style={{...styles.ytLogoText, color: mycolor}}>YouTube</Text>
@@ -35,7 +49,7 @@ export default function Header() {
         <MaterialIcons
           color={mycolor}
           name="account-circle"
-          onPress={()=> dispatch({type: 'change_theme', payload:!currentTheme})} 
+          onPress={()=> dispatch({type: 'change_theme', payload:!currentTheme})}
           size={32} />
       </View>
     </View>

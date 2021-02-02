@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Dimensions,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,12 +14,14 @@ const MiniCard= (props)=> {
   const {colors}= useTheme()
   const textColor= colors.iconColor
 
+
   return (
     <TouchableOpacity
       onPress={()=> navigation.navigate('videoPlayer', {videoId: props.videoId, title: props.title})}
     >
       <View style={styles.container}>
         <Image
+          resizeMode='cover'
           source={{uri: `https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
           style={styles.backgroundImg}
         />
@@ -43,14 +46,16 @@ const MiniCard= (props)=> {
 const styles= StyleSheet.create({
 
   backgroundImg: {
-    height: 100,
+    height: Platform.OS === 'web' ? '100%': 100,
     width: '45%'
   },
 
   container: {
+    flex: 1,
     flexDirection: 'row',
     margin: 10,
     marginBottom: 0,
+    height: Platform.OS === 'web' ? 300 : '100%',
   },
 
   subText: {

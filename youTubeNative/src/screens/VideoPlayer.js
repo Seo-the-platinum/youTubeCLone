@@ -43,7 +43,7 @@ const styles= StyleSheet.create({
   playerView: {
     borderColor:'red',
     borderWidth: 2,
-    height: 200,
+    height: 400,
     width: '100%',
   },
 
